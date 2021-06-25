@@ -31,6 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     """Custom User Models That Will Help Us using Email as username"""
     email = models.EmailField(max_length=300, unique=True)
     name = models.CharField(max_length=300)
+    username = models.CharField(max_length=300,null=True,blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)
     objects = UserManager()
