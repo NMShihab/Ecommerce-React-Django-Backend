@@ -3,7 +3,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import UserSerializer
+from .serializers import UserSerializer,UserSerializerWithToken
 from .models import User
 
 @api_view(["GET"])
@@ -17,8 +17,10 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self,attrs):
         data = super().validate(attrs)
 
-        data['name'] = self.user.name 
-        data['email'] = self.user.email 
+        serializer = UserSerializerWithToken(self.user).data
+
+        for key,value in serializer.items():
+            data[key] = value
 
         return data
 
