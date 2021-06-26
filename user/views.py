@@ -1,9 +1,11 @@
 from django.shortcuts import render
+from rest_framework import status
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
+from django.contrib.auth.hashers import make_password
 from .serializers import UserSerializer,UserSerializerWithToken
 from .models import User
 
@@ -20,6 +22,25 @@ def getUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(users,many=True)
     return Response(serializer.data)
+
+@api_view(["POST"])
+def registerUser(request):
+    data = request.data
+
+    try:
+
+        user = User.objects.create_user(
+            name = data['name'],
+            email = data['email'],
+            username = data['username'],
+            password = make_password(data['password'])
+        )
+        serializer = UserSerializerWithToken(user,many=False)
+        return Response(serializer.data)
+    except:
+        message = {"details":"User with this email already exist"}
+        return Response(message,status= status.HTTP_400_BAD_REQUEST)
+
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     
