@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'user',
     'product.apps.ProductConfig',
+    'userapi.apps.UserapiConfig',
     
 ]
 
@@ -185,6 +185,6 @@ MEDIA_ROOT = "static/image"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Register Custom user Model
-AUTH_USER_MODEL = 'user.User'
+# AUTH_USER_MODEL = 'user.User'
 
 CORS_ALLOW_ALL_ORIGINS = True
