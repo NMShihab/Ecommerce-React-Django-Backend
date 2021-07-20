@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAdminUser,IsAuthenticated
 from rest_framework import status
 from .models import Product, Order,OrderItem,ShippingAddress
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer,OrderSerializer
 
 # Create your views here.
 
@@ -67,14 +67,7 @@ def addOrderItems(request):
 
             product.countInStock -= orderItem.quantity
             product.save()
-            
 
-        
-
-
-
-
-
-
-    return Response("Order")
+    serializer = OrderSerializer(order,many=True)
+    return Response(serializer.data)
 
