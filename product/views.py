@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAdminUser,IsAuthenticated
 from rest_framework import status
 from .models import Product, Order,OrderItem,ShippingAddress
 from .serializers import ProductSerializer,OrderSerializer
+from datetime import datetime
 
 # Create your views here.
 
@@ -88,7 +89,17 @@ def getOrderById(request,pk):
         return Response({"detail":"Order doesn't exist"},status=status.HTTP_400_BAD_REQUEST)
 
 
-    
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateOrderToPaid(request,pk):
+    user = request.user
+    order = Order.objects.get(_id = pk)
 
+    order.isPaid = True
+    order.paidAt = datetime.now()
+
+    order.save()
+    
+    return Response("Order is paid")
     
     
