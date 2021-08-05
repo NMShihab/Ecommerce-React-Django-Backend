@@ -61,11 +61,17 @@ def getUserProfile(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated,IsAdminUser])
+@permission_classes([IsAdminUser])
 def getAllProfile(request):
     users = User.objects.all()
-    serializer = UserDataSerializer(users,many=True)
+    serializer = UserSerializer(users,many=True)
     return Response(serializer.data)
 
 
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteUser(request,pk):
+    userDelete = User.objects.get(id=pk)
+    userDelete.delete()
+    return Response("User was deleted")
 
