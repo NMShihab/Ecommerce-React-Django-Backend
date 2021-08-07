@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from django.conf import settings
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,7 +55,7 @@ REST_FRAMEWORK = {
 }
 
 
-from datetime import timedelta
+
 
 
 SIMPLE_JWT = {
@@ -88,7 +89,6 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
